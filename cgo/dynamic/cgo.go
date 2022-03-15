@@ -1,4 +1,4 @@
-package cgo
+package dynamic
 
 //使用#cgo定义库路径
 

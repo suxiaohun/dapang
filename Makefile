@@ -1,0 +1,7 @@
+
+run:
+	@go run .
+
+
+
+.PHONY:

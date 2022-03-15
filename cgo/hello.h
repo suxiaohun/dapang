@@ -2,6 +2,5 @@
 #define HELLO_H
 
 const char *Name();
-void StaticHello(void);
-void DynamicHello(void);
+void say(char* s);
 #endif

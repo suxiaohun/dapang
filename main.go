@@ -1,8 +1,9 @@
 package main
 
 import (
+	"dapang/cgo"
 	"dapang/lesson"
-	"fmt"
+	"dapang/rsa_tools"
 )
 
 func main() {
@@ -21,12 +22,23 @@ func testAll() {
 	lesson.GetUUID()
 	lesson.Map2JSON()
 	lesson.Array1()
-	fmt.Println(lesson.Reverse("123456789"))
+	lesson.Reverse("123456789")
+	lesson.WaitGroupWithUnsafeCounter()
+	lesson.WaitGroupWithSafeCounter()
 
-	//lesson.Dup1()
-	//lesson.Dup2()
+
+
+	cgo.HelloWorldWithCMethod()
+	cgo.Say()
+	cgo.Hey()
+
+	rsa_tools.GenerateSignInfo()
+	rsa_tools.GenerateRsa()
+	rsa_tools.GenerateSignature()
 
 	//lesson.PicGifOnBrowser()
+	//lesson.Http()
+	//aliyun.GetObjectToFile()
 
 	//lesson.FetchUrl1()
 	//lesson.FetchUrl2()
@@ -37,3 +49,5 @@ func testAll() {
 	//cgo.HelloWorldWithCMethod()
 	//cgo.Hello2()
 }
+
+
