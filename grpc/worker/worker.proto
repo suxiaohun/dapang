@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package="dapang/grpc/searcher/worker";
+package worker;
+
+
+
+enum NodeStatus {
+    Dead = 0;
+    ReadOnly = 1;
+    Ready = 2;
+}
+
+enum ListMode {
+    All = 0;
+    OnlyFeature = 1;
+    OnlyCluster = 2;
+}
+
+
+message ShardInfo {
+    int32 region_id = 1;
+    string index_id = 2;
+    string worker_id = 3;
+    uint64 shard_size = 4;
+    google.protobuf.Timestamp first_time = 5;
+    google.protobuf.Timestamp last_time = 6;
+    bool writing = 7;
+    bool retrained = 8;
+    bool useCpuIndex = 9;
+    string db_id = 10;
+    string ns_id = 11;
+    bool use_snapshot_recover = 12;
+    google.protobuf.Timestamp update_time = 13;
+}
+
+
+message NodeInfo {
+    uint32 shards = 1;
+    uint64 total_gpu_memory_size = 2;
+    uint64 available_gpu_memory_size = 3;
+    float load_factor = 4;
+    NodeStatus status = 5;
+    uint32 cluster_shards = 6;
+    uint64 total_memory_size = 7;
+    uint64 available_memory_size = 8;
+    uint64 license_capacity = 9;
+}
+
+message ClusterShardInfo {
+    string index_id = 1;
+    uint64 shard_size = 2;
+    int64 version = 3;
+}
+
+message ListShardsRequest {
+    bool writing_only = 1;
+    ListMode mode = 2;
+    string ns_id = 3; // [SINCE v3.0.0]
+    string db_id = 4; // [SINCE v3.0.0]
+}
+
+message ListShardsResponse {
+    NodeInfo node_info = 1;
+    repeated ShardInfo shard_infos = 2;
+    repeated ClusterShardInfo cluster_shard_infos = 3;
+}
+
+service WorkerService {
+    rpc ListShards(ListShardsRequest) returns (ListShardsResponse);
+}

@@ -8,7 +8,8 @@ import (
 
 func main() {
 
-	testAll()
+	//testAll()
+	lesson.DNS()
 }
 
 func testAll() {
@@ -25,8 +26,6 @@ func testAll() {
 	lesson.Reverse("123456789")
 	lesson.WaitGroupWithUnsafeCounter()
 	lesson.WaitGroupWithSafeCounter()
-
-
 
 	cgo.HelloWorldWithCMethod()
 	cgo.Say()
@@ -49,5 +48,3 @@ func testAll() {
 	//cgo.HelloWorldWithCMethod()
 	//cgo.Hello2()
 }
-
-

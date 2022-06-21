@@ -1,0 +1,115 @@
+syntax = "proto3";
+option go_package = "dapang/grpc/searcher";
+package searcher;
+
+import "gitlab.sz.sensetime.com/viper/commonapis/pb/commonapis.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+message RegionInfo {
+  // 区域ID.
+  // [EN] Region ID.
+  int32 region_id = 1;
+  // 本区域特征数.
+  // [EN] Number of features in this region.
+  uint64 features = 2;
+  // 本区域数据时间范围.
+  // [EN] Time range of data in this region.
+  sensetime.viper.commonapis.TimeRange period = 3;
+}
+
+
+message WorkerInfo {
+  // worker名.
+  // [EN] Worker ID.
+  string worker_id = 1;
+  // 区域ID数.
+  // [EN] Number of regions in this worker.
+  int32 region_ids = 2;
+  // 分片数.
+  // [EN] Total number of worker shard.
+  uint64 shards = 3;
+  // 本区域特征数.
+  // [EN] Number of features in this worker.
+  uint64 features = 4;
+  // 聚类中心分片数.
+  // [EN] The number of shards of cluster centroid.
+  uint64 cluster_shards = 5;
+  // 聚类中心数.
+  // [EN] Number of cluster centroid.
+  uint64 clusters = 6;
+}
+
+
+message GetSystemInfoRequest {
+}
+
+message GetSystemInfoResponse {
+  // 系统总分片数.
+  // [EN] Total number of system shard.
+  uint64 shards = 1;
+  // 系统总特征数.
+  // [EN] Total number of system feature.
+  uint64 features = 2;
+
+  // 正常运行worker列表.
+  // [EN] Normally running worker list.
+  repeated string online_workers = 3;
+  // 下线worker列表.
+  // [EN] Offline worker list.
+  repeated string offline_workers = 4;
+
+  // 区域统计信息.
+  // [EN] Regional statistics.
+  repeated RegionInfo region_infos = 5;
+
+  // 系统总用量百分比.
+  // [EN] Percentage of system total usage.
+  float used_percentage = 7;
+
+  // 聚类中心分片数 [SINCE v2.0.0].
+  // [EN] The number of shards of cluster centroid [SINCE v2.0.0].
+  uint64 cluster_shards = 8;
+  // 聚类中心数 [SINCE v2.0.0].
+  // [EN] Number of cluster centroid [SINCE v2.0.0].
+  uint64 clusters = 9;
+
+  // 系统内部状态记录, 仅供内部调试之用 [SINCE v2.0.0].
+  // [EN] Internal status record of the system, for internal debug only [SINCE v2.0.0].
+  map<string, string> system_metadata = 10;
+  // TODO LicenseInfo
+
+  // License限制下的总库容(可容纳特征数) [SINCE v2.0.0].
+  // [EN] Total storage capacity limit by License (number of allowable features) [SINCE v2.0.0].
+  uint64 license_capacity = 11;
+  // 系统可用总显存大小(不含预留显存), 单位Bytes [SINCE v2.0.0].
+  // [EN] Total GPU memory size of system available (excluding reserved GPU memory), unit: Bytes [SINCE v2.0.0].
+  uint64 available_gpu_memory_size = 12;
+  // 系统在线workers总显存, 单位Bytes [SINCE v2.0.0].
+  // [EN] Total GPU memory of system online workers, unit: Bytes [SINCE v2.0.0].
+  uint64 total_gpu_memory_size = 13;
+  // 最早有效删除时间,早于此时间无法删除任何数据, 无法删除时为空 [SINCE v2.0.0].
+  // [EN] The earliest valid delete time, before this time can not delete any data. It will be null when cannot be deleted [SINCE v2.0.0].
+  google.protobuf.Timestamp first_time_to_delete = 14;
+  // 系统可用总内存大小, 单位Bytes [SINCE v2.2.0].
+  // [EN] Total memory size of system available, unit: Bytes [SINCE v2.2.0].
+  uint64 available_memory_size = 15;
+  // 系统在线workers总内存, 单位Bytes [SINCE v2.2.0].
+  // [EN] Total memory of system online workers, unit: Bytes [SINCE v2.2.0].
+  uint64 total_memory_size = 16;
+  // worker统计信息 [SINCE v4.2.0].
+  // [EN] Worker statistics [SINCE v4.2.0].
+  repeated WorkerInfo worker_infos = 17;
+}
+
+// SearchService 为支持时序和空间维度的分布式高维深度学习特征检索服务.
+// [EN] SearchService is a distributed high dimensional deep learning feature search service that supports temporal and spatial dimensions.
+service SearchService {
+  // 获取系统运行统计信息.
+  // [EN] Get system operation statistics.
+  rpc GetSystemInfo(GetSystemInfoRequest) returns (GetSystemInfoResponse) {
+    option (google.api.http) = {
+      get: "/v2/get_system_info"
+    };
+  }
+}

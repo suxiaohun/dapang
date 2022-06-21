@@ -33,7 +33,6 @@ func WaitGroupWithSafeCounter() {
 			defer func() { mut.Unlock() }()
 			mut.Lock()
 			counter++
-			//fmt.Println(counter)
 			wg.Done()
 		}()
 	}
