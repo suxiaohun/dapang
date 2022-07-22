@@ -2,14 +2,17 @@ package main
 
 import (
 	"dapang/cgo"
+	"dapang/grpc/face_worker"
 	"dapang/lesson"
 	"dapang/rsa_tools"
 )
 
 func main() {
 
+	face_worker.Run()
+
 	//testAll()
-	lesson.DNS()
+	//lesson.DNS()
 }
 
 func testAll() {

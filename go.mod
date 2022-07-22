@@ -10,9 +10,9 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	gitlab.sz.sensetime.com/viper/commonapis v0.0.0-20220303094956-987227c04c68
-	google.golang.org/genproto v0.0.0-20220314164441-57ef72a4c106
-	google.golang.org/grpc v1.45.0
-	google.golang.org/protobuf v1.27.1
+	google.golang.org/genproto v0.0.0-20220622171453-ea41d75dfa0f
+	google.golang.org/grpc v1.47.0
+	google.golang.org/protobuf v1.28.0
 )
 
 require (
@@ -28,9 +28,10 @@ require (
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742 // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220317022123-2c4bbad7e934 // indirect
+	golang.org/x/net v0.0.0-20220622184535-263ec571b305 // indirect
+	golang.org/x/sys v0.0.0-20220622161953-175b2fd9d664 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220224211638-0e9765cccd65 // indirect
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.2.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
